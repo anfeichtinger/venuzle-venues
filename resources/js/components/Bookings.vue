@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>All Venues</h4>
+        <h4>All Bookings</h4>
         <table class="table table-bordered mt-5">
             <thead>
                 <tr>
@@ -13,25 +13,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="venue in venues" :key="venue.id">
-                    <td>{{ venue.id }}</td>
-                    <td>{{ venue.name }}</td>
-                    <td>{{ venue.openingTimes.split("-")[0] }}</td>
-                    <td>{{ venue.openingTimes.split("-")[1] }}</td>
-                    <td>{{ venue.updated_at }}</td>
+                <tr v-for="booking in bookings" :key="booking.id">
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.name }}</td>
+                    <td>{{ booking.openingTimes.split("-")[0] }}</td>
+                    <td>{{ booking.openingTimes.split("-")[1] }}</td>
+                    <td>{{ booking.updated_at }}</td>
                     <td>
                         <div class="text-right" role="group">
                             <router-link
                                 :to="{
-                                    name: 'editvenue',
-                                    params: { id: venue.id },
+                                    name: 'editbooking',
+                                    params: { id: booking.id },
                                 }"
                                 class="btn btn-primary mx-2"
                                 >Edit
                             </router-link>
                             <button
                                 class="btn btn-danger mx-2"
-                                @click="deleteVenue(venue.id)"
+                                @click="deleteBooking(booking.id)"
                             >
                                 Delete
                             </button>
@@ -44,9 +44,9 @@
         <button
             type="button"
             class="btn btn-primary"
-            @click="this.$router.push('/venues/add')"
+            @click="this.$router.push('/bookings/add')"
         >
-            Add Venue
+            Add Booking
         </button>
     </div>
 </template>
@@ -55,15 +55,15 @@
 export default {
     data() {
         return {
-            venues: [],
+            bookings: [],
         };
     },
     created() {
         this.$axios.get("/sanctum/csrf-cookie").then((response) => {
             this.$axios
-                .get("/api/venues")
+                .get("/api/bookings")
                 .then((response) => {
-                    this.venues = response.data;
+                    this.bookings = response.data;
                 })
                 .catch(function (error) {
                     console.error(error);
@@ -71,13 +71,15 @@ export default {
         });
     },
     methods: {
-        deleteVenue(id) {
+        deleteBooking(id) {
             this.$axios.get("/sanctum/csrf-cookie").then((response) => {
                 this.$axios
-                    .delete(`/api/venues/delete/${id}`)
+                    .delete(`/api/bookings/delete/${id}`)
                     .then((response) => {
-                        let i = this.venues.map((item) => item.id).indexOf(id);
-                        this.venues.splice(i, 1);
+                        let i = this.bookings
+                            .map((item) => item.id)
+                            .indexOf(id);
+                        this.bookings.splice(i, 1);
                     })
                     .catch(function (error) {
                         console.error(error);

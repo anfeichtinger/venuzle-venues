@@ -10,11 +10,16 @@
             >
             <div class="navbar-nav">
                 <router-link to="/venues" class="nav-item nav-link"
-                    >Edit Venues</router-link
+                    >All Venues</router-link
                 >
             </div>
             <div class="navbar-nav ml-auto">
-                <a href="#" class="nav-link">GitHub</a>
+                <a
+                    href="https://github.com/anfeichtinger/venuzle-venues"
+                    target="_blank"
+                    class="nav-link"
+                    >GitHub</a
+                >
             </div>
         </nav>
         <router-view />
