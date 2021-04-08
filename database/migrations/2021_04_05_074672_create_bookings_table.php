@@ -14,11 +14,13 @@ class CreateBookingsTable extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('venue_id');
+            $table->id();
+            $table->unsignedBigInteger('venue_id');
             $table->string('customer');
             $table->string('bookingTime');
             $table->timestamps();
+            
+            $table->foreign('venue_id')->references('id')->on('venues');
         });
     }
 

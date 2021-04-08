@@ -72,17 +72,15 @@ export default {
     },
     methods: {
         deleteVenue(id) {
-            this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-                this.$axios
-                    .delete(`/api/venues/delete/${id}`)
-                    .then((response) => {
-                        let i = this.venues.map((item) => item.id).indexOf(id);
-                        this.venues.splice(i, 1);
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            });
+            this.$axios
+                .delete(`/api/venues/delete/${id}`)
+                .then((response) => {
+                    let i = this.venues.map((item) => item.id).indexOf(id);
+                    this.venues.splice(i, 1);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         },
     },
 };

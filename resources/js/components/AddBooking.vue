@@ -1,35 +1,35 @@
 <template>
     <div>
-        <h4>Edit Venue</h4>
+        <h4>Add Booking</h4>
         <div class="row mt-5">
             <div class="col-md-6">
-                <form @submit.prevent="updateVenue">
+                <form @submit.prevent="addBooking">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Customer</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="venue.name"
+                            v-model="booking.customer"
                         />
                     </div>
                     <div class="form-group">
-                        <label>Opens At</label>
+                        <label>Start At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="opensAt"
+                            v-model="startAt"
                         />
                     </div>
                     <div class="form-group">
-                        <label>Closes At</label>
+                        <label>Stop At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="closesAt"
+                            v-model="stopAt"
                         />
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        Update Venue
+                        Add Booking
                     </button>
                 </form>
             </div>
@@ -41,28 +41,22 @@
 export default {
     data() {
         return {
-            venue: {},
-            opensAt: "00:00",
-            closesAt: "24:00",
+            booking: {},
+            startAt: "00:00",
+            stopAt: "24:00",
         };
     },
     created() {
-        this.$axios
-            .get(`/api/venues/edit/${this.$route.params.id}`)
-            .then((response) => {
-                this.venue = response.data;
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+        console.log(this.$route.query.venue);
+        this.booking.venue_id = this.$route.query.venue;
     },
     methods: {
-        updateVenue() {
-            this.venue.openingTimes = `${this.opensAt}-${this.closesAt}`;
+        addBooking() {
+            this.booking.bookingTime = `${this.startAt}-${this.stopAt}`;
             this.$axios
-                .post(`/api/venues/update/${this.$route.params.id}`, this.venue)
+                .post("/api/bookings/add", this.booking)
                 .then((response) => {
-                    this.$router.push({ name: "venues" });
+                    this.$router.push({ name: "bookings" });
                 })
                 .catch(function (error) {
                     console.error(error);

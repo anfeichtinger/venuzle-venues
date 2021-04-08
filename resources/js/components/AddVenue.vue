@@ -49,16 +49,14 @@ export default {
     methods: {
         addVenue() {
             this.venue.openingTimes = `${this.opensAt}-${this.closesAt}`;
-            this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-                this.$axios
-                    .post("/api/venues/add", this.venue)
-                    .then((response) => {
-                        this.$router.push({ name: "venues" });
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            });
+            this.$axios
+                .post("/api/venues/add", this.venue)
+                .then((response) => {
+                    this.$router.push({ name: "venues" });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         },
     },
 };

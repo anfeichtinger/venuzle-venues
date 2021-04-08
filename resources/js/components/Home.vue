@@ -15,7 +15,12 @@
                             <br />
                             Open To: {{ venue.openingTimes.split("-")[1] }}
                         </p>
-                        <a href="#" class="btn btn-primary">Create Booking</a>
+                        <a
+                            href="#"
+                            class="btn btn-primary"
+                            @click="createBooking(venue.id)"
+                            >Create Booking</a
+                        >
                     </div>
                 </div>
             </div>
@@ -42,6 +47,14 @@ export default {
                     console.error(error);
                 });
         });
+    },
+    methods: {
+        createBooking: function (venue_id) {
+            this.$router.push({
+                path: "/bookings/add",
+                query: { venue: venue_id },
+            });
+        },
     },
 };
 </script>

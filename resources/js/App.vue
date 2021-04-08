@@ -13,6 +13,11 @@
                     >All Venues</router-link
                 >
             </div>
+            <div class="navbar-nav">
+                <router-link to="/bookings" class="nav-item nav-link"
+                    >All Bookings</router-link
+                >
+            </div>
             <div class="navbar-nav ml-auto">
                 <a
                     href="https://github.com/anfeichtinger/venuzle-venues"
