@@ -15,6 +15,13 @@ class VenueController extends Controller
         return array_reverse($venues);
     }
 
+    // specific venues
+    public function specific($id)
+    {
+        $venue = Venue::find($id);
+        return $venue;
+    }
+
     // add venue
     public function add(Request $request)
     {

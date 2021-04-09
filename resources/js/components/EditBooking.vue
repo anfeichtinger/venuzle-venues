@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>Edit Booking</h4>
+        <h4>Edit Booking for {{ this.venue.name }}</h4>
         <div class="row mt-5">
             <div class="col-md-6">
                 <form @submit.prevent="updateBooking">
@@ -9,7 +9,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            v-model="booking.customer"
+                            v-model="this.booking.customer"
                         />
                     </div>
                     <div class="form-group">
@@ -42,6 +42,7 @@ export default {
     data() {
         return {
             booking: {},
+            venue: {},
             startAt: "00:00",
             stopAt: "24:00",
         };
@@ -51,6 +52,16 @@ export default {
             .get(`/api/bookings/edit/${this.$route.params.id}`)
             .then((response) => {
                 this.booking = response.data;
+                this.startAt = this.booking.bookingTime.split("-")[0];
+                this.stopAt = this.booking.bookingTime.split("-")[1];
+                this.$axios
+                    .get(`/api/venues/${this.booking.venue_id}`)
+                    .then((response) => {
+                        this.venue = response.data;
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
             })
             .catch(function (error) {
                 console.error(error);
@@ -59,19 +70,17 @@ export default {
     methods: {
         updateBooking() {
             this.booking.bookingTime = `${this.startAt}-${this.stopAt}`;
-            this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-                this.$axios
-                    .post(
-                        `/api/bookings/update/${this.$route.params.id}`,
-                        this.booking
-                    )
-                    .then((response) => {
-                        this.$router.push({ name: "bookings" });
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            });
+            this.$axios
+                .post(
+                    `/api/bookings/update/${this.$route.params.id}`,
+                    this.booking
+                )
+                .then((response) => {
+                    this.$router.push({ name: "bookings" });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         },
     },
 };

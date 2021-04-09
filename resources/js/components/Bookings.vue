@@ -42,14 +42,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <button
-            type="button"
-            class="btn btn-primary"
-            @click="this.$router.push('/bookings/add')"
-        >
-            Add Booking
-        </button>
     </div>
 </template>
 

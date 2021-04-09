@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BookingController;
 
 Route::group(['prefix' => 'venues'], function () {
     Route::get('/', [VenueController::class, 'index']);
+    Route::get('/{id}', [VenueController::class, 'specific']);
     Route::post('add', [VenueController::class, 'add']);
     Route::get('edit/{id}', [VenueController::class, 'edit']);
     Route::post('update/{id}', [VenueController::class, 'update']);
@@ -19,4 +20,5 @@ Route::group(['prefix' => 'bookings'], function () {
     Route::get('edit/{id}', [BookingController::class, 'edit']);
     Route::post('update/{id}', [BookingController::class, 'update']);
     Route::delete('delete/{id}', [BookingController::class, 'delete']);
+    Route::get('/venue/{venue_id}', [BookingController::class, 'venueBookings']);
 });

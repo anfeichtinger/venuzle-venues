@@ -20,7 +20,7 @@ class CreateBookingsTable extends Migration
             $table->string('bookingTime');
             $table->timestamps();
             
-            $table->foreign('venue_id')->references('id')->on('venues');
+            $table->foreign('venue_id')->references('id')->on('venues')->onDelete('cascade');
         });
     }
 

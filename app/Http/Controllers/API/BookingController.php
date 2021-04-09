@@ -53,4 +53,10 @@ class BookingController extends Controller
 
         return response()->json('The booking was successfully deleted');
     }
+    // all bookings for venue_id
+    public function venueBookings($venue_id)
+    {
+        $bookings = Booking::where('venue_id', $venue_id);
+        return array_reverse($bookings);
+    }
 }
