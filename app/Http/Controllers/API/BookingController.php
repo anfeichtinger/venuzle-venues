@@ -56,7 +56,7 @@ class BookingController extends Controller
     // all bookings for venue_id
     public function venueBookings($venue_id)
     {
-        $bookings = Booking::where('venue_id', $venue_id);
+        $bookings = Booking::all()->where('venue_id', $venue_id)->toArray();
         return array_reverse($bookings);
     }
 }

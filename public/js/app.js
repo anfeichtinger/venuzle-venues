@@ -16603,6 +16603,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       booking: {},
       venue: {},
+      otherBookings: [],
       startAt: "00:00",
       stopAt: "24:00"
     };
@@ -16613,6 +16614,8 @@ __webpack_require__.r(__webpack_exports__);
     this.booking.venue_id = this.$route.query.venue || 1;
     this.$axios.get("/api/venues/".concat(this.booking.venue_id)).then(function (response) {
       _this.venue = response.data;
+
+      _this.getOtherBookings();
     })["catch"](function (error) {
       console.error(error);
     });
@@ -16632,6 +16635,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectVenue: function selectVenue(venueID) {
       this.booking.venue_id = venueID;
+    },
+    getOtherBookings: function getOtherBookings() {
+      var _this3 = this;
+
+      this.$axios.get("/api/bookings/venue/".concat(this.booking.venue_id)).then(function (response) {
+        _this3.otherBookings = response.data;
+      })["catch"](function (error) {
+        console.error(error);
+      });
     }
   }
 });
@@ -16736,6 +16748,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       booking: {},
       venue: {},
+      otherBookings: [],
       startAt: "00:00",
       stopAt: "24:00"
     };
@@ -16750,6 +16763,8 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.$axios.get("/api/venues/".concat(_this.booking.venue_id)).then(function (response) {
         _this.venue = response.data;
+
+        _this.getOtherBookings();
       })["catch"](function (error) {
         console.error(error);
       });
@@ -16766,6 +16781,15 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$router.push({
           name: "bookings"
         });
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    getOtherBookings: function getOtherBookings() {
+      var _this3 = this;
+
+      this.$axios.get("/api/bookings/venue/".concat(this.booking.venue_id)).then(function (response) {
+        _this3.otherBookings = response.data;
       })["catch"](function (error) {
         console.error(error);
       });
@@ -17049,9 +17073,22 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "cols-md-6"
-}, null, -1
+var _hoisted_10 = {
+  "class": "cols-md-6 mt-2"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Other Bookings for this venue", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "table-responsive"
+};
+var _hoisted_13 = {
+  "class": "table"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Customer"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Booking Time")])], -1
 /* HOISTED */
 );
 
@@ -17094,7 +17131,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.stopAt]])]), _hoisted_9], 32
   /* HYDRATE_EVENTS */
-  )]), _hoisted_10])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.otherBookings, function (otherBooking) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
+      key: otherBooking.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.customer), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.bookingTime), 1
+    /* TEXT */
+    )]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])])])])]);
 }
 
 /***/ }),
@@ -17323,6 +17370,25 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
+var _hoisted_10 = {
+  "class": "cols-md-6 mt-2"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Other Bookings for this venue", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "table-responsive"
+};
+var _hoisted_13 = {
+  "class": "table"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Customer"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Booking Time")])], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -17337,7 +17403,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-control",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return _this.booking.customer = $event;
-    })
+    }),
+    required: "",
+    autofocus: ""
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.booking.customer]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
@@ -17358,7 +17426,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.stopAt]])]), _hoisted_9], 32
   /* HYDRATE_EVENTS */
-  )])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.otherBookings, function (otherBooking) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
+      key: otherBooking.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.customer), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.bookingTime), 1
+    /* TEXT */
+    )]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])])])])]);
 }
 
 /***/ }),
