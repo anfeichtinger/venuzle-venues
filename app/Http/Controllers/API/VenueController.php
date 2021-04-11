@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Venue;
 
+use App\Http\Requests\AddVenueRequest;
+
 class VenueController extends Controller
 {
     // all venues
@@ -23,7 +25,7 @@ class VenueController extends Controller
     }
 
     // add venue
-    public function add(Request $request)
+    public function add(AddVenueRequest $request)
     {
         $venue = new Venue([
             'name' => $request->name,
@@ -43,7 +45,7 @@ class VenueController extends Controller
     }
 
     // update venue
-    public function update($id, Request $request)
+    public function update($id, AddVenueRequest $request)
     {
         $venue = Venue::find($id);
         $venue->update($request->all());

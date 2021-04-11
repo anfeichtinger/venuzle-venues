@@ -92,11 +92,11 @@ export default {
                         this.venue = response.data;
                         this.getOtherBookings();
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
                     });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     },
@@ -111,7 +111,7 @@ export default {
                 .then((response) => {
                     this.$router.push({ name: "bookings" });
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     this.errors = error.response.data.errors;
                 });
         },
@@ -129,7 +129,7 @@ export default {
                         1
                     );
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
         },

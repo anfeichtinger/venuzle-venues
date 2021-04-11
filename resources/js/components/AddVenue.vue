@@ -1,6 +1,11 @@
 <template>
     <div>
         <h4>Add Venue</h4>
+        <div v-if="errors" class="shadow-md">
+            <p v-for="error in errors" :key="error" class="text-sm text-danger">
+                {{ error[0] }}
+            </p>
+        </div>
         <div class="row mt-5">
             <div class="col-md-6">
                 <form @submit.prevent="addVenue">
@@ -42,6 +47,7 @@ export default {
     data() {
         return {
             venue: {},
+            errors: null,
         };
     },
     created() {
@@ -55,8 +61,8 @@ export default {
                 .then((response) => {
                     this.$router.push({ name: "venues" });
                 })
-                .catch(function (error) {
-                    console.error(error);
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
                 });
         },
     },

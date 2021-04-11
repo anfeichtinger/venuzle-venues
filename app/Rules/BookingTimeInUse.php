@@ -35,6 +35,10 @@ class BookingTimeInUse implements Rule
 
         foreach ($otherTimes as $otherTime){
 
+            if ($this->data['id'] == $otherTime->id) {
+                break;
+            }
+
             $otherBegin = strtotime($otherTime->booking_begin);
             $otherEnd = strtotime($otherTime->booking_end);
 
@@ -58,6 +62,6 @@ class BookingTimeInUse implements Rule
      */
     public function message()
     {
-        return 'This timeslot is already used in another booking.';
+        return 'This timeslot overlaps with another booking.';
     }
 }
