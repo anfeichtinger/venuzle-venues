@@ -1,6 +1,11 @@
 <template>
     <div>
         <h4>Add Booking for {{ this.venue.name }}</h4>
+        <div v-if="errors" class="shadow-md">
+            <p v-for="error in errors" :key="error" class="text-sm">
+                {{ error[0] }}
+            </p>
+        </div>
         <div class="row mt-5">
             <div class="col-md-6">
                 <form @submit.prevent="addBooking">
@@ -71,7 +76,8 @@ export default {
             venue: {},
             otherBookings: [],
             startAt: "00:00",
-            stopAt: "24:00",
+            stopAt: "23:59",
+            errors: null,
         };
     },
     created() {
@@ -82,8 +88,8 @@ export default {
                 this.venue = response.data;
                 this.getOtherBookings();
             })
-            .catch(function (error) {
-                console.error(error);
+            .catch((error) => {
+                console.log(error);
             });
     },
     methods: {
@@ -94,8 +100,8 @@ export default {
                 .then((response) => {
                     this.$router.push({ name: "bookings" });
                 })
-                .catch(function (error) {
-                    console.error(error);
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
                 });
         },
         selectVenue(venueID) {
@@ -107,8 +113,8 @@ export default {
                 .then((response) => {
                     this.otherBookings = response.data;
                 })
-                .catch(function (error) {
-                    console.error(error);
+                .catch((error) => {
+                    console.log(error);
                 });
         },
     },

@@ -1,6 +1,16 @@
 <template>
     <div>
         <h4>Edit Booking for {{ this.venue.name }}</h4>
+        <div
+            v-if="errors"
+            class="bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
+        >
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm">
+                    {{ error }}
+                </p>
+            </div>
+        </div>
         <div class="row mt-5">
             <div class="col-md-6">
                 <form @submit.prevent="updateBooking">
@@ -70,6 +80,7 @@ export default {
             otherBookings: [],
             startAt: "00:00",
             stopAt: "24:00",
+            errors: null,
         };
     },
     created() {
@@ -86,11 +97,11 @@ export default {
                         this.getOtherBookings();
                     })
                     .catch(function (error) {
-                        console.error(error);
+                        this.errors = error.data.errors;
                     });
             })
             .catch(function (error) {
-                console.error(error);
+                this.errors = error.data.errors;
             });
     },
     methods: {
@@ -105,7 +116,7 @@ export default {
                     this.$router.push({ name: "bookings" });
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    this.errors = error.data.errors;
                 });
         },
         getOtherBookings() {
@@ -115,7 +126,7 @@ export default {
                     this.otherBookings = response.data;
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    this.errors = error.data.errors;
                 });
         },
     },

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 
+use App\Http\Requests\StoreBookingRequest;
+
 class BookingController extends Controller
 {
     // all bookings
@@ -16,9 +18,8 @@ class BookingController extends Controller
     }
 
     // add booking
-    public function add(Request $request)
+    public function add(StoreBookingRequest $request)
     {
-        
         $booking = new Booking([
             'customer' => $request->customer,
             'bookingTime' => $request->bookingTime,
