@@ -2,7 +2,7 @@
     <div>
         <h4>Add Booking for {{ this.venue.name }}</h4>
         <div v-if="errors" class="shadow-md">
-            <p v-for="error in errors" :key="error" class="text-sm">
+            <p v-for="error in errors" :key="error" class="text-sm text-danger">
                 {{ error[0] }}
             </p>
         </div>
@@ -20,20 +20,20 @@
                         />
                     </div>
                     <div class="form-group">
-                        <label>Start At</label>
+                        <label>Begin At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="startAt"
+                            v-model="this.booking.booking_begin"
                             required
                         />
                     </div>
                     <div class="form-group">
-                        <label>Stop At</label>
+                        <label>End At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="stopAt"
+                            v-model="this.booking.booking_end"
                             required
                         />
                     </div>
@@ -58,7 +58,10 @@
                                 :key="otherBooking.id"
                             >
                                 <td>{{ otherBooking.customer }}</td>
-                                <td>{{ otherBooking.bookingTime }}</td>
+                                <td>
+                                    {{ otherBooking.booking_begin }} -
+                                    {{ otherBooking.booking_end }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -75,8 +78,6 @@ export default {
             booking: {},
             venue: {},
             otherBookings: [],
-            startAt: "00:00",
-            stopAt: "23:59",
             errors: null,
         };
     },
@@ -86,6 +87,14 @@ export default {
             .get(`/api/venues/${this.booking.venue_id}`)
             .then((response) => {
                 this.venue = response.data;
+
+                this.booking.booking_begin = this.venue.openingTimes.split(
+                    "-"
+                )[0];
+                this.booking.booking_end = this.venue.openingTimes.split(
+                    "-"
+                )[1];
+
                 this.getOtherBookings();
             })
             .catch((error) => {
@@ -94,7 +103,6 @@ export default {
     },
     methods: {
         addBooking() {
-            this.booking.bookingTime = `${this.startAt}-${this.stopAt}`;
             this.$axios
                 .post("/api/bookings/add", this.booking)
                 .then((response) => {

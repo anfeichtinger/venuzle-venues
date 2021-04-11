@@ -28,25 +28,22 @@ class BookingTimeInUse implements Rule
      */
     public function passes($attribute, $value)
     {
-        $timeArr = explode('-', $value);
-
-        $startTime = strtotime($timeArr[0]);
-        $stopTime = strtotime($timeArr[1]);
+        $begin = strtotime($this->data['booking_begin']);
+        $end = strtotime($this->data['booking_end']);
 
         $otherTimes = Booking::all()->where('venue_id', $this->data['venue_id']);
 
         foreach ($otherTimes as $otherTime){
-            $otherTimeArr = explode('-', $otherTime);
 
-            $otherStart = strtotime($otherTimeArr[0]);
-            $otherStop = strtotime($otherTimeArr[1]);
+            $otherBegin = strtotime($otherTime->booking_begin);
+            $otherEnd = strtotime($otherTime->booking_end);
 
             if (
-            ($startTime == $otherStart) || 
-            ($stopTime == $otherStop) || 
-            ($startTime > $otherStart && $stopTime < $otherStop) || 
-            ($startTime < $otherStart && $stopTime > $otherStart) ||
-            ($startTime < $otherStart && $stopTime > $otherStop)) {
+            ($begin == $otherBegin) || 
+            ($end == $otherEnd) || 
+            ($begin > $otherBegin && $end < $otherEnd) || 
+            ($begin < $otherBegin && $end > $otherBegin) ||
+            ($begin < $otherBegin && $end > $otherEnd)) {
                 return false;
             }
         }

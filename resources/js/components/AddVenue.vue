@@ -43,7 +43,7 @@ export default {
         return {
             venue: {},
             opensAt: "00:00",
-            closesAt: "24:00",
+            closesAt: "23:59",
         };
     },
     methods: {

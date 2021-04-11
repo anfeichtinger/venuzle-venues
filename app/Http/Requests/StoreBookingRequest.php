@@ -25,10 +25,12 @@ class StoreBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer' => ['required','max:255'],
-            'bookingTime' => ['required', 'max:11', 
-                'regex:/([0-1][0-9]|[2][0-3]):([0-5][0-9])-([0-1][0-9]|[2][0-3]):([0-5][0-9])/', 
+            'customer' => ['required', 'regex:/[A-Z ]+/i', 'max:255'],
+            'booking_begin' => ['required', 'max:5', 
+                'regex:/([0-1][0-9]|[2][0-3]):([0-5][0-9])/', 
                  new BookingTimeInUse($this->all())],
+            'booking_end' => ['required', 'max:5', 
+                'regex:/([0-1][0-9]|[2][0-3]):([0-5][0-9])/'],
             'venue_id' => ['required']
         ];
     }

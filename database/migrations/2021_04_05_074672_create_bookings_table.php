@@ -17,7 +17,8 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('venue_id');
             $table->string('customer');
-            $table->string('bookingTime');
+            $table->string('booking_begin');
+            $table->string('booking_end');
             $table->timestamps();
             
             $table->foreign('venue_id')->references('id')->on('venues')->onDelete('cascade');

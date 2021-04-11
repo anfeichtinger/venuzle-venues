@@ -7,8 +7,8 @@
                     <th>ID</th>
                     <th>Customer</th>
                     <th>Venue ID</th>
-                    <th>Start At</th>
-                    <th>Stop At</th>
+                    <th>Begin At</th>
+                    <th>End At</th>
                     <th>Timestamp</th>
                     <th>Actions</th>
                 </tr>
@@ -18,8 +18,8 @@
                     <td>{{ booking.id }}</td>
                     <td>{{ booking.customer }}</td>
                     <td>{{ booking.venue_id }}</td>
-                    <td>{{ booking.bookingTime.split("-")[0] }}</td>
-                    <td>{{ booking.bookingTime.split("-")[1] }}</td>
+                    <td>{{ booking.booking_begin }}</td>
+                    <td>{{ booking.booking_end }}</td>
                     <td>{{ booking.updated_at }}</td>
                     <td>
                         <div class="text-right" role="group">

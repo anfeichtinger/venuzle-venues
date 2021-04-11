@@ -22,7 +22,8 @@ class BookingController extends Controller
     {
         $booking = new Booking([
             'customer' => $request->customer,
-            'bookingTime' => $request->bookingTime,
+            'booking_begin' => $request->booking_begin,
+            'booking_end' => $request->booking_end,
             'venue_id' => $request->venue_id
         ]);
         $booking->save();
