@@ -27,7 +27,8 @@ class VenueController extends Controller
     {
         $venue = new Venue([
             'name' => $request->name,
-            'openingTimes' => $request->openingTimes
+            'open_at' => $request->open_at,
+            'close_at' => $request->close_at
         ]);
         $venue->save();
 

@@ -16613,8 +16613,8 @@ __webpack_require__.r(__webpack_exports__);
     this.booking.venue_id = this.$route.query.venue || 1;
     this.$axios.get("/api/venues/".concat(this.booking.venue_id)).then(function (response) {
       _this.venue = response.data;
-      _this.booking.booking_begin = _this.venue.openingTimes.split("-")[0];
-      _this.booking.booking_end = _this.venue.openingTimes.split("-")[1];
+      _this.booking.booking_begin = _this.venue.open_at;
+      _this.booking.booking_end = _this.venue.close_at;
 
       _this.getOtherBookings();
     })["catch"](function (error) {
@@ -16664,16 +16664,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      venue: {},
-      opensAt: "00:00",
-      closesAt: "23:59"
+      venue: {}
     };
+  },
+  created: function created() {
+    this.venue.open_at = "06:00";
+    this.venue.close_at = "22:00";
   },
   methods: {
     addVenue: function addVenue() {
       var _this = this;
 
-      this.venue.openingTimes = "".concat(this.opensAt, "-").concat(this.closesAt);
       this.$axios.post("/api/venues/add", this.venue).then(function (response) {
         _this.$router.push({
           name: "venues"
@@ -16815,9 +16816,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      venue: {},
-      opensAt: "00:00",
-      closesAt: "24:00"
+      venue: {}
     };
   },
   created: function created() {
@@ -16833,7 +16832,6 @@ __webpack_require__.r(__webpack_exports__);
     updateVenue: function updateVenue() {
       var _this2 = this;
 
-      this.venue.openingTimes = "".concat(this.opensAt, "-").concat(this.closesAt);
       this.$axios.post("/api/venues/update/".concat(this.$route.params.id), this.venue).then(function (response) {
         _this2.$router.push({
           name: "venues"
@@ -17233,19 +17231,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.opensAt = $event;
+      return $data.venue.open_at = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.opensAt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.venue.open_at]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.closesAt = $event;
+      return $data.venue.close_at = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.closesAt]])]), _hoisted_10], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.venue.close_at]])]), _hoisted_10], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }
@@ -17543,19 +17541,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.opensAt = $event;
+      return $data.venue.open_at = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.opensAt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.venue.open_at]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.closesAt = $event;
+      return $data.venue.close_at = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.closesAt]])]), _hoisted_10], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.venue.close_at]])]), _hoisted_10], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }
@@ -17613,9 +17611,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: venue.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.name), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Open From: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.openingTimes.split("-")[0]) + " ", 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Opens at: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.open_at) + " ", 1
     /* TEXT */
-    ), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Open To: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.openingTimes.split("-")[1]), 1
+    ), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Closes at: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.close_at), 1
     /* TEXT */
     )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
       href: "#",
@@ -17678,9 +17676,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.name), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.openingTimes.split("-")[0]), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.open_at), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.openingTimes.split("-")[1]), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.close_at), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(venue.updated_at), 1
     /* TEXT */

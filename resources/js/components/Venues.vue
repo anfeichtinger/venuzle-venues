@@ -16,8 +16,8 @@
                 <tr v-for="venue in venues" :key="venue.id">
                     <td>{{ venue.id }}</td>
                     <td>{{ venue.name }}</td>
-                    <td>{{ venue.openingTimes.split("-")[0] }}</td>
-                    <td>{{ venue.openingTimes.split("-")[1] }}</td>
+                    <td>{{ venue.open_at }}</td>
+                    <td>{{ venue.close_at }}</td>
                     <td>{{ venue.updated_at }}</td>
                     <td>
                         <div class="text-right" role="group">

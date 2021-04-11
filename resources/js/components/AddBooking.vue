@@ -88,12 +88,8 @@ export default {
             .then((response) => {
                 this.venue = response.data;
 
-                this.booking.booking_begin = this.venue.openingTimes.split(
-                    "-"
-                )[0];
-                this.booking.booking_end = this.venue.openingTimes.split(
-                    "-"
-                )[1];
+                this.booking.booking_begin = this.venue.open_at;
+                this.booking.booking_end = this.venue.close_at;
 
                 this.getOtherBookings();
             })

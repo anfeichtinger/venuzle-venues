@@ -9,5 +9,5 @@ class Venue extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['name', 'openingTimes'];
+    protected $fillable = ['name', 'open_at', 'close_at'];
 }

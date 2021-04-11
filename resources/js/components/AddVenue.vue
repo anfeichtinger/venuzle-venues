@@ -17,7 +17,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            v-model="opensAt"
+                            v-model="venue.open_at"
                         />
                     </div>
                     <div class="form-group">
@@ -25,7 +25,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            v-model="closesAt"
+                            v-model="venue.close_at"
                         />
                     </div>
                     <button type="submit" class="btn btn-primary">
@@ -42,13 +42,14 @@ export default {
     data() {
         return {
             venue: {},
-            opensAt: "00:00",
-            closesAt: "23:59",
         };
+    },
+    created() {
+        this.venue.open_at = "06:00";
+        this.venue.close_at = "22:00";
     },
     methods: {
         addVenue() {
-            this.venue.openingTimes = `${this.opensAt}-${this.closesAt}`;
             this.$axios
                 .post("/api/venues/add", this.venue)
                 .then((response) => {

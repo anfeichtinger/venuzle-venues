@@ -11,9 +11,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ venue.name }}</h5>
                         <p class="card-text">
-                            Open From: {{ venue.openingTimes.split("-")[0] }}
+                            Opens at: {{ venue.open_at }}
                             <br />
-                            Open To: {{ venue.openingTimes.split("-")[1] }}
+                            Closes at: {{ venue.close_at }}
                         </p>
                         <a
                             href="#"
