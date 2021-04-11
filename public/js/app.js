@@ -16749,8 +16749,6 @@ __webpack_require__.r(__webpack_exports__);
       booking: {},
       venue: {},
       otherBookings: [],
-      startAt: "00:00",
-      stopAt: "24:00",
       errors: null
     };
   },
@@ -16759,18 +16757,16 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$axios.get("/api/bookings/edit/".concat(this.$route.params.id)).then(function (response) {
       _this.booking = response.data;
-      _this.startAt = _this.booking.bookingTime.split("-")[0];
-      _this.stopAt = _this.booking.bookingTime.split("-")[1];
 
       _this.$axios.get("/api/venues/".concat(_this.booking.venue_id)).then(function (response) {
         _this.venue = response.data;
 
         _this.getOtherBookings();
       })["catch"](function (error) {
-        this.errors = error.data.errors;
+        console.log(error);
       });
     })["catch"](function (error) {
-      this.errors = error.data.errors;
+      console.log(error);
     });
   },
   methods: {
@@ -16783,7 +16779,7 @@ __webpack_require__.r(__webpack_exports__);
           name: "bookings"
         });
       })["catch"](function (error) {
-        this.errors = error.data.errors;
+        this.errors = error.response.data.errors;
       });
     },
     getOtherBookings: function getOtherBookings() {
@@ -16791,8 +16787,13 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$axios.get("/api/bookings/venue/".concat(this.booking.venue_id)).then(function (response) {
         _this3.otherBookings = response.data;
+        var delID = _this3.booking.id;
+
+        _this3.otherBookings.splice(_this3.otherBookings.findIndex(function (i) {
+          return i.id === delID;
+        }), 1);
       })["catch"](function (error) {
-        this.errors = error.data.errors;
+        console.log(error);
       });
     }
   }
@@ -17349,7 +17350,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   key: 0,
-  "class": "bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
+  "class": "shadow-md"
 };
 var _hoisted_2 = {
   "class": "row mt-5"
@@ -17369,7 +17370,7 @@ var _hoisted_6 = {
   "class": "form-group"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Start At", -1
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Begin At", -1
 /* HOISTED */
 );
 
@@ -17377,7 +17378,7 @@ var _hoisted_8 = {
   "class": "form-group"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Stop At", -1
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "End At", -1
 /* HOISTED */
 );
 
@@ -17412,19 +17413,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, "Edit Booking for " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.venue.name), 1
   /* TEXT */
-  ), $data.errors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (v, k) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-      key: k
-    }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(v, function (error) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", {
-        key: error,
-        "class": "text-sm"
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error), 1
-      /* TEXT */
-      );
-    }), 128
-    /* KEYED_FRAGMENT */
-    ))]);
+  ), $data.errors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (error) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", {
+      key: error,
+      "class": "text-sm text-danger"
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error[0]), 1
+    /* TEXT */
+    );
   }), 128
   /* KEYED_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
@@ -17445,26 +17440,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.startAt = $event;
-    })
+      return _this.booking.booking_begin = $event;
+    }),
+    required: ""
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.startAt]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.booking.booking_begin]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.stopAt = $event;
-    })
+      return _this.booking.booking_end = $event;
+    }),
+    required: ""
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.stopAt]])]), _hoisted_10], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.booking.booking_end]])]), _hoisted_10], 32
   /* HYDRATE_EVENTS */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.otherBookings, function (otherBooking) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
       key: otherBooking.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.customer), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.bookingTime), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.booking_begin) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(otherBooking.booking_end), 1
     /* TEXT */
     )]);
   }), 128

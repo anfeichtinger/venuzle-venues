@@ -1,15 +1,10 @@
 <template>
     <div>
         <h4>Edit Booking for {{ this.venue.name }}</h4>
-        <div
-            v-if="errors"
-            class="bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg"
-        >
-            <div v-for="(v, k) in errors" :key="k">
-                <p v-for="error in v" :key="error" class="text-sm">
-                    {{ error }}
-                </p>
-            </div>
+        <div v-if="errors" class="shadow-md">
+            <p v-for="error in errors" :key="error" class="text-sm text-danger">
+                {{ error[0] }}
+            </p>
         </div>
         <div class="row mt-5">
             <div class="col-md-6">
@@ -25,19 +20,21 @@
                         />
                     </div>
                     <div class="form-group">
-                        <label>Start At</label>
+                        <label>Begin At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="startAt"
+                            v-model="this.booking.booking_begin"
+                            required
                         />
                     </div>
                     <div class="form-group">
-                        <label>Stop At</label>
+                        <label>End At</label>
                         <input
                             type="text"
                             class="form-control"
-                            v-model="stopAt"
+                            v-model="this.booking.booking_end"
+                            required
                         />
                     </div>
                     <button type="submit" class="btn btn-primary">
@@ -61,7 +58,10 @@
                                 :key="otherBooking.id"
                             >
                                 <td>{{ otherBooking.customer }}</td>
-                                <td>{{ otherBooking.bookingTime }}</td>
+                                <td>
+                                    {{ otherBooking.booking_begin }} -
+                                    {{ otherBooking.booking_end }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -78,8 +78,6 @@ export default {
             booking: {},
             venue: {},
             otherBookings: [],
-            startAt: "00:00",
-            stopAt: "24:00",
             errors: null,
         };
     },
@@ -88,8 +86,6 @@ export default {
             .get(`/api/bookings/edit/${this.$route.params.id}`)
             .then((response) => {
                 this.booking = response.data;
-                this.startAt = this.booking.bookingTime.split("-")[0];
-                this.stopAt = this.booking.bookingTime.split("-")[1];
                 this.$axios
                     .get(`/api/venues/${this.booking.venue_id}`)
                     .then((response) => {
@@ -97,11 +93,11 @@ export default {
                         this.getOtherBookings();
                     })
                     .catch(function (error) {
-                        this.errors = error.data.errors;
+                        console.log(error);
                     });
             })
             .catch(function (error) {
-                this.errors = error.data.errors;
+                console.log(error);
             });
     },
     methods: {
@@ -116,7 +112,7 @@ export default {
                     this.$router.push({ name: "bookings" });
                 })
                 .catch(function (error) {
-                    this.errors = error.data.errors;
+                    this.errors = error.response.data.errors;
                 });
         },
         getOtherBookings() {
@@ -124,9 +120,17 @@ export default {
                 .get(`/api/bookings/venue/${this.booking.venue_id}`)
                 .then((response) => {
                     this.otherBookings = response.data;
+                    const delID = this.booking.id;
+
+                    this.otherBookings.splice(
+                        this.otherBookings.findIndex(function (i) {
+                            return i.id === delID;
+                        }),
+                        1
+                    );
                 })
                 .catch(function (error) {
-                    this.errors = error.data.errors;
+                    console.log(error);
                 });
         },
     },
