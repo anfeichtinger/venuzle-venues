@@ -1,15 +1,8 @@
 <template>
     <div>
         <page-title title="Add Venues"></page-title>
-        <div
-            v-if="errors"
-            class="shadow-md bg-red-500 p-2 rounded-md text-white font-bold"
-        >
-            <p v-for="error in errors" :key="error" class="text-sm text-danger">
-                {{ error[0] }}
-            </p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <notice :msgs="errors" :error="true"></notice>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
             <form @submit.prevent="addVenue">
                 <div class="input-container">
                     <label class="input-label">Name</label>
@@ -51,13 +44,14 @@
 </template>
 
 <script lang="ts">
+import Notice from "../widgets/Notice.vue";
 import PageTitle from "../widgets/PageTitle.vue";
 export default {
-    components: { PageTitle },
+    components: { PageTitle, Notice },
     data() {
         return {
             venue: {},
-            errors: null,
+            errors: {},
         };
     },
     created() {

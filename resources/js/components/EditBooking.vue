@@ -1,14 +1,7 @@
 <template>
     <div>
         <page-title :title="`Edit booking for ${venue.name}`"></page-title>
-        <div
-            v-if="errors"
-            class="shadow-md bg-red-500 p-2 rounded-md text-white font-bold"
-        >
-            <p v-for="error in errors" :key="error" class="text-sm text-danger">
-                {{ error[0] }}
-            </p>
-        </div>
+        <notice :msgs="errors" :error="true"></notice>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-8">
             <form @submit.prevent="updateBooking">
                 <div class="input-container">
@@ -52,7 +45,7 @@
                     {{ venue.open_at }} - {{ venue.close_at }}
                 </p>
                 <label class="input-label">
-                    Other Bookings for this venue
+                    Other bookings for this venue
                 </label>
                 <table class="shadow-md bg-white w-full mt-2">
                     <thead>
@@ -82,15 +75,16 @@
 </template>
 
 <script lang="ts">
+import Notice from "../widgets/Notice.vue";
 import PageTitle from "../widgets/PageTitle.vue";
 export default {
-    components: { PageTitle },
+    components: { PageTitle, Notice },
     data() {
         return {
             booking: {},
             venue: {},
             otherBookings: [],
-            errors: null,
+            errors: {},
         };
     },
     created() {
