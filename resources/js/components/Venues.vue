@@ -1,59 +1,65 @@
 <template>
     <div>
         <page-title title="All Venues"></page-title>
-        <table class="shadow-md bg-white w-full">
-            <thead>
-                <tr>
-                    <th class="table-cell">ID</th>
-                    <th class="table-cell">Name</th>
-                    <th class="table-cell">Opens At</th>
-                    <th class="table-cell">Closes At</th>
-                    <th class="table-cell">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="venue in venues" :key="venue.id">
-                    <td class="table-cell">{{ venue.id }}</td>
-                    <td class="table-cell">{{ venue.name }}</td>
-                    <td class="table-cell">{{ venue.open_at }}</td>
-                    <td class="table-cell">{{ venue.close_at }}</td>
-                    <td class="table-cell">
-                        <router-link
-                            :to="{
-                                name: 'editvenue',
-                                params: { id: venue.id },
-                            }"
-                            class="btn-primary mr-2"
-                            >Edit
-                        </router-link>
-                        <button
-                            class="btn-danger"
-                            @click="deleteVenue(venue.id)"
-                        >
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <spinner v-if="loading"></spinner>
+        <div v-else>
+            <p v-if="venues.length == 0">No venues yet...</p>
+            <table v-else class="shadow-md bg-white w-full">
+                <thead>
+                    <tr>
+                        <th class="table-cell">ID</th>
+                        <th class="table-cell">Name</th>
+                        <th class="table-cell">Opens At</th>
+                        <th class="table-cell">Closes At</th>
+                        <th class="table-cell">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="venue in venues" :key="venue.id">
+                        <td class="table-cell">{{ venue.id }}</td>
+                        <td class="table-cell">{{ venue.name }}</td>
+                        <td class="table-cell">{{ venue.open_at }}</td>
+                        <td class="table-cell">{{ venue.close_at }}</td>
+                        <td class="table-cell">
+                            <router-link
+                                :to="{
+                                    name: 'editvenue',
+                                    params: { id: venue.id },
+                                }"
+                                class="btn-primary mr-2"
+                                >Edit
+                            </router-link>
+                            <button
+                                class="btn-danger"
+                                @click="deleteVenue(venue.id)"
+                            >
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <button
-            type="button"
-            class="btn-primary mt-8"
-            @click="$router.push('/venues/add')"
-        >
-            Add Venue
-        </button>
+            <button
+                type="button"
+                class="btn-primary mt-8"
+                @click="$router.push('/venues/add')"
+            >
+                Add Venue
+            </button>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import PageTitle from "../widgets/PageTitle.vue";
+import Spinner from "../widgets/Spinner.vue";
 export default {
-    components: { PageTitle },
+    components: { PageTitle, Spinner },
     data() {
         return {
             venues: [],
+            loading: true,
         };
     },
     created() {
@@ -62,6 +68,7 @@ export default {
                 .get("/api/venues")
                 .then((response) => {
                     this.venues = response.data;
+                    this.loading = false;
                 })
                 .catch(function (error) {
                     console.error(error);

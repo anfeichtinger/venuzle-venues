@@ -47,28 +47,32 @@
                 <label class="input-label">
                     Other bookings for this venue
                 </label>
-                <table class="shadow-md bg-white w-full mt-2">
-                    <thead>
-                        <tr>
-                            <th class="table-cell">Customer</th>
-                            <th class="table-cell">Booking Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="otherBooking in otherBookings"
-                            :key="otherBooking.id"
-                        >
-                            <td class="table-cell">
-                                {{ otherBooking.customer }}
-                            </td>
-                            <td class="table-cell">
-                                {{ otherBooking.booking_begin }} -
-                                {{ otherBooking.booking_end }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <spinner v-if="loading"></spinner>
+                <div v-else>
+                    <p v-if="otherBookings.length == 0">No other bookings...</p>
+                    <table v-else class="shadow-md bg-white w-full mt-2">
+                        <thead>
+                            <tr>
+                                <th class="table-cell">Customer</th>
+                                <th class="table-cell">Booking Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="otherBooking in otherBookings"
+                                :key="otherBooking.id"
+                            >
+                                <td class="table-cell">
+                                    {{ otherBooking.customer }}
+                                </td>
+                                <td class="table-cell">
+                                    {{ otherBooking.booking_begin }} -
+                                    {{ otherBooking.booking_end }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -77,14 +81,16 @@
 <script lang="ts">
 import Notice from "../widgets/Notice.vue";
 import PageTitle from "../widgets/PageTitle.vue";
+import Spinner from "../widgets/Spinner.vue";
 export default {
-    components: { PageTitle, Notice },
+    components: { PageTitle, Notice, Spinner },
     data() {
         return {
             booking: {},
             venue: {},
             otherBookings: [],
             errors: {},
+            loading: true,
         };
     },
     created() {
@@ -122,6 +128,7 @@ export default {
                 .get(`/api/bookings/venue/${this.booking.venue_id}`)
                 .then((response) => {
                     this.otherBookings = response.data;
+                    this.loading = false;
                 })
                 .catch((error) => {
                     console.log(error);
