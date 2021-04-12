@@ -1,41 +1,37 @@
 <template>
     <div>
-        <h4>All Venues</h4>
-        <table class="table table-bordered mt-5">
+        <page-title title="All Venues"></page-title>
+        <table class="shadow-md bg-white w-full">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Opens At</th>
-                    <th>Closes At</th>
-                    <th>Timestamp</th>
-                    <th>Actions</th>
+                    <th class="table-cell">ID</th>
+                    <th class="table-cell">Name</th>
+                    <th class="table-cell">Opens At</th>
+                    <th class="table-cell">Closes At</th>
+                    <th class="table-cell">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="venue in venues" :key="venue.id">
-                    <td>{{ venue.id }}</td>
-                    <td>{{ venue.name }}</td>
-                    <td>{{ venue.open_at }}</td>
-                    <td>{{ venue.close_at }}</td>
-                    <td>{{ venue.updated_at }}</td>
-                    <td>
-                        <div class="text-right" role="group">
-                            <router-link
-                                :to="{
-                                    name: 'editvenue',
-                                    params: { id: venue.id },
-                                }"
-                                class="btn btn-primary mx-2"
-                                >Edit
-                            </router-link>
-                            <button
-                                class="btn btn-danger mx-2"
-                                @click="deleteVenue(venue.id)"
-                            >
-                                Delete
-                            </button>
-                        </div>
+                    <td class="table-cell">{{ venue.id }}</td>
+                    <td class="table-cell">{{ venue.name }}</td>
+                    <td class="table-cell">{{ venue.open_at }}</td>
+                    <td class="table-cell">{{ venue.close_at }}</td>
+                    <td class="table-cell">
+                        <router-link
+                            :to="{
+                                name: 'editvenue',
+                                params: { id: venue.id },
+                            }"
+                            class="btn-primary mr-2"
+                            >Edit
+                        </router-link>
+                        <button
+                            class="btn-danger"
+                            @click="deleteVenue(venue.id)"
+                        >
+                            Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -43,8 +39,8 @@
 
         <button
             type="button"
-            class="btn btn-primary"
-            @click="this.$router.push('/venues/add')"
+            class="btn-primary mt-8"
+            @click="$router.push('/venues/add')"
         >
             Add Venue
         </button>
@@ -52,7 +48,9 @@
 </template>
 
 <script lang="ts">
+import PageTitle from "../widgets/PageTitle.vue";
 export default {
+    components: { PageTitle },
     data() {
         return {
             venues: [],
@@ -85,3 +83,7 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../../css/table.scss";
+</style>

@@ -35,7 +35,7 @@ class BookingTimeInUse implements Rule
 
         foreach ($otherTimes as $otherTime){
 
-            if ($this->data['id'] == $otherTime->id) {
+            if (array_key_exists('id', $this->data) && $this->data['id'] == $otherTime->id) {
                 break;
             }
 

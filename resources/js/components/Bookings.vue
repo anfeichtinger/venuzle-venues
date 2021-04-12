@@ -1,43 +1,39 @@
 <template>
     <div>
-        <h4>All Bookings</h4>
-        <table class="table table-bordered mt-5">
+        <page-title title="All Bookings"></page-title>
+        <table class="shadow-md bg-white w-full">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Customer</th>
-                    <th>Venue ID</th>
-                    <th>Begin At</th>
-                    <th>End At</th>
-                    <th>Timestamp</th>
-                    <th>Actions</th>
+                    <th class="table-cell">ID</th>
+                    <th class="table-cell">Customer</th>
+                    <th class="table-cell">Venue ID</th>
+                    <th class="table-cell">Begin At</th>
+                    <th class="table-cell">End At</th>
+                    <th class="table-cell">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="booking in bookings" :key="booking.id">
-                    <td>{{ booking.id }}</td>
-                    <td>{{ booking.customer }}</td>
-                    <td>{{ booking.venue_id }}</td>
-                    <td>{{ booking.booking_begin }}</td>
-                    <td>{{ booking.booking_end }}</td>
-                    <td>{{ booking.updated_at }}</td>
-                    <td>
-                        <div class="text-right" role="group">
-                            <router-link
-                                :to="{
-                                    name: 'editbooking',
-                                    params: { id: booking.id },
-                                }"
-                                class="btn btn-primary mx-2"
-                                >Edit
-                            </router-link>
-                            <button
-                                class="btn btn-danger mx-2"
-                                @click="deleteBooking(booking.id)"
-                            >
-                                Delete
-                            </button>
-                        </div>
+                    <td class="table-cell">{{ booking.id }}</td>
+                    <td class="table-cell">{{ booking.customer }}</td>
+                    <td class="table-cell">{{ booking.venue_id }}</td>
+                    <td class="table-cell">{{ booking.booking_begin }}</td>
+                    <td class="table-cell">{{ booking.booking_end }}</td>
+                    <td class="table-cell">
+                        <router-link
+                            :to="{
+                                name: 'editbooking',
+                                params: { id: booking.id },
+                            }"
+                            class="btn-primary mx-2"
+                            >Edit
+                        </router-link>
+                        <button
+                            class="btn-danger mx-2"
+                            @click="deleteBooking(booking.id)"
+                        >
+                            Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -46,7 +42,9 @@
 </template>
 
 <script lang="ts">
+import PageTitle from "../widgets/PageTitle.vue";
 export default {
+    components: { PageTitle },
     data() {
         return {
             bookings: [],
@@ -77,3 +75,7 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../../css/table.scss";
+</style>

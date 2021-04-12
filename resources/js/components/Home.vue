@@ -1,34 +1,21 @@
 <template>
-    <div class="container">
-        <h4>Available Venues</h4>
-        <div class="row mt-5">
-            <div
-                class="col-12 col-sm-6 col-md-4 py-2"
+    <div>
+        <page-title title="Available Venues"></page-title>
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-16"
+        >
+            <venue-card
                 v-for="venue in venues"
                 :key="venue.id"
-            >
-                <div class="card w-100" style="width: 18rem">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ venue.name }}</h5>
-                        <p class="card-text">
-                            Opens at: {{ venue.open_at }}
-                            <br />
-                            Closes at: {{ venue.close_at }}
-                        </p>
-                        <a
-                            href="#"
-                            class="btn btn-primary"
-                            @click="createBooking(venue.id)"
-                            >Create Booking</a
-                        >
-                    </div>
-                </div>
-            </div>
+                :venue="venue"
+            ></venue-card>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import PageTitle from "../widgets/PageTitle.vue";
+import VenueCard from "../widgets/VenueCard.vue";
 export default {
     name: "Home",
     data() {
@@ -48,13 +35,9 @@ export default {
                 });
         });
     },
-    methods: {
-        createBooking: function (venue_id) {
-            this.$router.push({
-                path: "/bookings/add",
-                query: { venue: venue_id },
-            });
-        },
+    components: {
+        PageTitle,
+        VenueCard,
     },
 };
 </script>
