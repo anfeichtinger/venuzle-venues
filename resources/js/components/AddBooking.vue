@@ -47,6 +47,10 @@
                 </button>
             </form>
             <div>
+                <label class="input-label"> Opening times </label>
+                <p class="mb-4 mt-2">
+                    {{ venue.open_at }} - {{ venue.close_at }}
+                </p>
                 <label class="input-label">
                     Other Bookings for this venue
                 </label>

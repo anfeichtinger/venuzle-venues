@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Rules\BookingTimeInUse;
+use App\Rules\BookingTimeInOpening;
 use App\Rules\BeginEndTime;
 
 class StoreBookingRequest extends FormRequest
@@ -31,6 +32,7 @@ class StoreBookingRequest extends FormRequest
             'booking_begin' => ['required', 'max:5', 
                 'regex:/([0-1][0-9]|[2][0-3]):([0-5][0-9])/', 
                  new BeginEndTime($this->booking_begin, $this->booking_end),
+                 new BookingTimeInOpening($this->all()),
                  new BookingTimeInUse($this->all())],
             'booking_end' => ['required', 'max:5', 
                 'regex:/([0-1][0-9]|[2][0-3]):([0-5][0-9])/'],
