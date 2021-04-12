@@ -6,7 +6,9 @@
             v-else
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-16"
         >
+            <p v-if="venues.length == 0">No venues yet...</p>
             <venue-card
+                v-else
                 v-for="venue in venues"
                 :key="venue.id"
                 :venue="venue"
