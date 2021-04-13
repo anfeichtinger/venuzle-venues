@@ -18,22 +18,20 @@
                 <div class="input-container">
                     <label class="input-label">Opens At</label>
                     <input
-                        type="text"
+                        type="time"
                         class="input-text"
                         v-model="venue.open_at"
                         placeholder="08:00"
-                        v-mask="'##:##'"
                         required
                     />
                 </div>
                 <div class="input-container">
                     <label class="input-label">Closes At</label>
                     <input
-                        type="text"
+                        type="time"
                         class="input-text"
                         v-model="venue.close_at"
                         placeholder="15:00"
-                        v-mask="'##:##'"
                         required
                     />
                 </div>
@@ -46,7 +44,6 @@
 </template>
 
 <script lang="ts">
-import { mask } from "vue-the-mask";
 import Notice from "../widgets/Notice.vue";
 import PageTitle from "../widgets/PageTitle.vue";
 export default {
@@ -79,7 +76,6 @@ export default {
                 });
         },
     },
-    directives: { mask },
 };
 </script>
 

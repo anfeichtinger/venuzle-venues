@@ -25,7 +25,6 @@
     },
     "dependencies": {
         "tailwindcss": "^2.1.1",
-        "vue-router": "^4.0.5",
-        "vue-the-mask": "^0.11.1"
+        "vue-router": "^4.0.5"
     }
 }
