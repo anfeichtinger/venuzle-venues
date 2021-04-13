@@ -22,6 +22,7 @@
                         class="input-text"
                         v-model="booking.booking_begin"
                         placeholder="08:00"
+                        v-mask="'##:##'"
                         required
                     />
                 </div>
@@ -32,6 +33,7 @@
                         class="input-text"
                         v-model="booking.booking_end"
                         placeholder="15:00"
+                        v-mask="'##:##'"
                         required
                     />
                 </div>
@@ -79,6 +81,7 @@
 </template>
 
 <script lang="ts">
+import { mask } from "vue-the-mask";
 import Notice from "../widgets/Notice.vue";
 import PageTitle from "../widgets/PageTitle.vue";
 import Spinner from "../widgets/Spinner.vue";
@@ -147,6 +150,7 @@ export default {
                 });
         },
     },
+    directives: { mask },
 };
 </script>
 
