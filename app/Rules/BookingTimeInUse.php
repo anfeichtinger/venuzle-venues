@@ -46,6 +46,7 @@ class BookingTimeInUse implements Rule
             ($begin == $otherBegin) || 
             ($end == $otherEnd) || 
             ($begin > $otherBegin && $end < $otherEnd) || 
+            ($begin > $otherBegin && $end > $otherEnd) || 
             ($begin < $otherBegin && $end > $otherBegin) ||
             ($begin < $otherBegin && $end > $otherEnd)) {
                 return false;
