@@ -34,7 +34,7 @@ class VenueController extends Controller
         ]);
         $venue->save();
 
-        return response()->json('The venue was successfully added');
+        return response()->json($venue, 201);
     }
 
     // edit venue
@@ -50,7 +50,7 @@ class VenueController extends Controller
         $venue = Venue::find($id);
         $venue->update($request->all());
 
-        return response()->json('The venue was successfully updated');
+        return response()->json($venue, 200);
     }
 
     // delete venue
@@ -59,6 +59,6 @@ class VenueController extends Controller
         $venue = Venue::find($id);
         $venue->delete();
 
-        return response()->json('The venue was successfully deleted');
+        return response()->json(null, 204);
     }
 }

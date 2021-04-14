@@ -28,7 +28,7 @@ class BookingController extends Controller
         ]);
         $booking->save();
 
-        return response()->json('The booking was successfully added');
+        return response()->json($booking, 201);
     }
 
     // edit booking
@@ -44,7 +44,7 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->update($request->all());
 
-        return response()->json('The booking was successfully updated');
+        return response()->json($booking, 200);
     }
 
     // delete booking
@@ -53,8 +53,9 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->delete();
 
-        return response()->json('The booking was successfully deleted');
+        return response()->json(null, 204);
     }
+    
     // all bookings for venue_id
     public function venueBookings($venue_id)
     {
